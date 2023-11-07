@@ -23,9 +23,10 @@ public class HitsManager {
 
     public void checkHit() {
         long currentDateTime = System.currentTimeMillis() / 1000L;
+        long currentTime = System.nanoTime();
         hit.setDate(currentDateTime);
         hit.setHit(service.checkHit(hit));
-        hit.setExecutionTime(currentDateTime);
+        hit.setExecutionTime(System.nanoTime() - currentTime);
         service.saveHit(hit);
 
     }
