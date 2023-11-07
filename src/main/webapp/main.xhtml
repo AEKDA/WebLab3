@@ -1,11 +1,107 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core">
-
 <h:head>
-    <title>JSF Page</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olevegic lab</title>
+    <h:outputStylesheet name="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet"/> -->
+    <link rel="icon" type="image/x-icon" href="favicon.gif" />
+    <h:outputScript library="js" name="script.js" target="body" />
 </h:head>
-<h:body>
-</h:body>
+
+<body>
+    <h:form id="mainForm">
+        <div class="header">
+            <div class="header-container">
+
+                <div>
+                    <div>
+                        Селянта Олег P3214
+                    </div>
+                    <div>
+                        Кешишян Давид P3214
+                    </div>
+                    <div>
+                        Вариант 2478
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="flex-container">
+                <div class="container">
+                    <div class="main-container">
+                        <canvas id="canvas"></canvas>
+
+                        <div class="choice">
+                            <div class="uni-choice">
+                                <h3>Choose X:</h3>
+                                <div class="command-links">
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="-4" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="-3" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="-2" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="-1" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="0" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="1" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="2" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="3" />
+                                    <h:commandLink action="#{hitsManager.hit.x}" value="4" />
+                                </div>
+                            </div>
+                            <div class="uni-choice">
+                                <h3>Choose Y:</h3>
+                                <h:inputText id="y-input" value="#{hitsManager.hit.y}" maxlength="15" required="true"
+                                    aria-placeholder="-5 to 5" />
+                            </div>
+                            <div class="uni-choice">
+                                <h3>Choose R:</h3>
+                                <div class="command-links">
+                                    <h:commandLink action="#{hitsManager.hit.r}" value="1" />
+                                    <h:commandLink action="#{hitsManager.hit.r}" value="1.5" />
+                                    <h:commandLink action="#{hitsManager.hit.r}" value="2" />
+                                    <h:commandLink action="#{hitsManager.hit.r}" value="2.5" />
+                                    <h:commandLink action="#{hitsManager.hit.r}" value="3" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-btns">
+                        <div class="btns-c">
+                            <h:commandButton id="submit-button" onclick="isFormValid()" value="submit"
+                                action="#{yourBean.processData}" />
+                            <h:commandButton id="clearButton" value="clear" action="#{yourBean.clearData}" />
+                        </div>
+                    </div>
+
+                    <div class="result-table">
+                        <div class="row head">
+                            <div class="x">x</div>
+                            <div class="y">y</div>
+                            <div class="r">r</div>
+                            <div class="ct">current time</div>
+                            <div class="et">execute time</div>
+                            <div class="result">result</div>
+                        </div>
+                        <h:dataTable id="maintable" value="#{hitsManager.getHits()}" var="pointAttempt"
+                            styleClass="row">
+                            <h:outputText styleClass="x" value="#{hit.x}" />
+                            <h:outputText styleClass="y" value="#{hit.y}" />
+                            <h:outputText styleClass="r" value="#{hit.r}" />
+                            <h:outputText styleClass="ct" value="#{hit.ct}" />
+                            <h:outputText styleClass="et" value="#{hit.et}" />
+                            <h:outputText styleClass="result" value="#{hit.hit}" />
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:messages globalOnly="true" styleClass="custom-alert" showSummary="false" showDetail="true" />
+    </h:form>
+</body>
 
 </html>

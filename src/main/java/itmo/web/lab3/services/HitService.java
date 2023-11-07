@@ -7,7 +7,7 @@ import itmo.web.lab3.util.HitDAO;
 import itmo.web.lab3.util.HitDAOImpl;
 
 
-    
+
 public class HitService {
     private HitDAO dao = new HitDAOImpl();
 
@@ -36,7 +36,7 @@ public class HitService {
     }
 
     private boolean isHitTriangle(double x, double y, double r) {
-        return x <= 0 && y <= 0 && y >= x - r;
+        return x <= 0 && y <= 0 && y >= -x - r;
     }
 
 }
