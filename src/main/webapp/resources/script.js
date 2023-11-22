@@ -4,7 +4,7 @@ let canvasStyle = getComputedStyle(canvas);
 canvas.width = parseInt(canvasStyle.width);
 canvas.height = parseInt(canvasStyle.height);
 
-const ctx = canvas.getContext("2d");
+let ctx = canvas.getContext("2d");
 
 function drawFigure(x, y, canvasWidth, canvasHeight) {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -111,7 +111,6 @@ function drawFigure(x, y, canvasWidth, canvasHeight) {
 drawFigure(canvas.width / 2, canvas.height / 2, canvas.width, canvas.height);
 
 // canvas click
-
 function handleCanvasClick(event) {
   if (!ifRSetCorrect()) {
     showCustomAlert("Невозможно определить координаты точки. Введите R");
@@ -141,7 +140,7 @@ function handleCanvasClick(event) {
     mouseX = mouseX - 0.06;
   }
   if (mouseY > 0) {
-    mouseY = mouseY + 0.07;
+    mouseY = mouseY - 0.005;
   }
 
   mouseX = mouseX.toFixed(4);
@@ -154,19 +153,81 @@ function handleCanvasClick(event) {
     isSquare(mouseX, mouseY) ||
     isTriangle(mouseX, mouseY)
   ) {
-    // console.log("Попадание");
+    console.log("коорд до ", originalX, originalY, R)
     ctx.beginPath();
     ctx.arc(originalX, originalY, 4, 0, 2 * Math.PI);
     ctx.fillStyle = "green";
   } else {
-    // console.log("Промах");
+    console.log("коорд до ", originalX, originalY, R)
     ctx.beginPath();
     ctx.arc(originalX, originalY, 4, 0, 2 * Math.PI);
     ctx.fillStyle = "red";
   }
-
+  SetCoordinates(mouseX, mouseY, R)
   ctx.fill();
 }
+
+function actualFromReal(x, y, r, result) {
+  x = Number.parseFloat(x)
+  y = Number.parseFloat(y)
+  r = Number.parseFloat(r)
+
+  if (x < 0) x = x + 0.06
+
+  if (y > 0) y = y - 0.01
+
+
+
+  let k = 133.3 / r + 0.5;
+
+
+  x = x * k
+
+  y = y * k
+
+
+
+  x = x + 200
+
+  y = -(y - 200)
+
+
+
+
+  console.log("коорд после ", x, y, r)
+
+  if (result === "true") {
+    console.log("попадание");
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = "green";
+  } else if (result === "false") {
+    console.log("промах");
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = "red";
+  }
+  ctx.fill();
+}
+
+function SetCoordinates(x, y, r) {
+  console.log("start send data")
+  let elemX = document.querySelector(".canvasX");
+  let elemY = document.querySelector(".canvasY");
+  let elemR = document.querySelector(".canvasR");
+
+  elemX.value = x
+  elemY.value = y
+  elemR.value = r
+
+  console.log("i will return", elemX.value, elemY.value, elemR.value);
+
+  let btn = document.querySelector(".hidden-submit-button");
+  btn.click();
+
+  console.log("sent")
+}
+
 
 function getLogs(mouseX, mouseY) {
   console.log("\n");
@@ -201,17 +262,59 @@ canvas.addEventListener("click", handleCanvasClick);
 
 function ifRSetCorrect() {
   let rValue = getR();
-  if (!nonCorrectDec(rValue, "r") && checkBased(rValue, 2, 5, "r")) {
+  if (!nonCorrectDec(rValue, "r")) {
     return true;
   }
   return false;
 }
 
+function linkControl() {
+  let a = document.querySelectorAll(".command-links a");
+  // console.log(a);
+
+  a.forEach((i) => {
+    i.addEventListener("click", changeBorder(i))
+  });
+
+  function changeBorder(link) {
+    linkClear()
+    link.style.border = "1px solid #393D76"
+  }
+}
+
+function linkClear() {
+  let a = document.querySelectorAll(".command-links a");
+  a.forEach((i) => {
+    i.style.border = "";
+  });
+}
+
 function getR() {
-  // change to usage R from xhtml
-  let rInput = document.getElementById("r-input");
-  let rValue = rInput.value.replace(",", ".");
+  let rInput = document.getElementById("mainForm:server-r");
+  let rValue;
+  if (rInput == null) rValue = 3;
+  else rValue = rInput.innerText.replace(",", ".");
   return rValue;
+}
+
+function parseTable() {
+  let rowData = []
+  let table = document.getElementById("mainForm:maintable");
+  let rows = table.getElementsByTagName("tr"); // push
+
+  Array.from(rows).forEach((row) => {
+    let newData = []
+    let cells = row.getElementsByTagName("td");
+    Array.from(cells).forEach((cell) => {
+      let content = cell.textContent.trim();
+      newData.push(content);
+    });
+
+    console.log(newData)
+    actualFromReal(newData[0], newData[1], newData[2], newData[5])
+  });
+
+  console.log(rowData);
 }
 
 function clearCanvas() {
@@ -219,18 +322,6 @@ function clearCanvas() {
   drawFigure(canvas.width / 2, canvas.height / 2, canvas.width, canvas.height);
 }
 
-// input listeners
-
-function setInputListeners() {
-  let yInput = document.getElementById("y-input");
-
-  let yValue = yInput.value.replace(",", ".");
-
-  if (nonCorrectDec(yValue, "y")) {
-    return;
-  }
-}
-document.addEventListener("input", setInputListeners);
 
 // is correct dec
 function nonCorrectDec(value, what) {
@@ -261,18 +352,7 @@ function hideCustomAlert() {
 
 // validation
 function isFormValid() {
-  const yInput = document.getElementById("y-input");
-
-  let yValue = yInput.value.replace(",", ".");
-
-  if (!checkBased(yValue, -5, 3, "y")) {
-    return false;
-  }
-  if (checkValue(yValue)) {
-    return true;
-  } else {
-    return false;
-  }
+  console.log("Sumbit btn clicked")
 }
 
 function checkValue(y, r) {
@@ -292,47 +372,10 @@ function checkBased(value, left, right, name) {
   return true;
 }
 
-// submit button opacity
-function updateSubmitButton() {
-  const submitButton = document.getElementById("submit-button");
-  const isFormValidFlag = isFormValid();
-  submitButton.disabled = !isFormValidFlag;
-
-  if (isFormValidFlag) {
-    submitButton.style.opacity = 1;
-  } else {
-    submitButton.style.opacity = 0.5;
-  }
-}
 
 // init state
 document.addEventListener("DOMContentLoaded", function () {
-  loadStateFromLocalStorage();
-  setInputListeners();
+  linkControl();
+  parseTable();
 });
 
-// load from localstorage
-function loadStateFromLocalStorage() {
-  const yInput = document.getElementById("y-input");
-
-  const savedY = localStorage.getItem("selectedY");
-
-  if (savedY) {
-    yInput.value = savedY;
-  }
-
-  yInput.addEventListener("input", updateSubmitButton);
-}
-
-// clear local storage
-function clearLocalStorage() {
-  localStorage.removeItem("selectedY");
-}
-
-// clear inputs
-function clearSelectedButtons() {
-  let yInput = document.getElementById("y-input");
-
-  yInput.value = "";
-  updateSubmitButton();
-}

@@ -21,6 +21,9 @@ public class HitService {
     public void saveHit(Hit h) {
         dao.save(h);
     }
+    public void clear() {
+        dao.clear();
+    }
 
     public boolean checkHit(Hit h) {
         return isHitCircle(h.getX(), h.getY(), h.getR()) || isHitRectangle(h.getX(), h.getY(), h.getR())

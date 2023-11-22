@@ -1,18 +1,11 @@
 package itmo.web.lab3.util;
 
-import org.hibernate.SessionFactory;
-// import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 // import itmo.web.lab3.beans.Hit;
 
 public class HibernateUtil {
-    private static final Logger log = LoggerFactory.getLogger(HibernateUtil.class);
-
-    private static SessionFactory factory;
-
     private HibernateUtil() {
     }
 
@@ -34,15 +27,29 @@ public class HibernateUtil {
     // return factory;
     // }
 
-    public static SessionFactory getSessionFactory() {
-        if (factory == null) {
-            try {
-                return new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-            } catch (Throwable ex) {
-                System.err.println("Инициализация фабрики сессий не удалась." + ex);
-                throw new ExceptionInInitializerError(ex);
-            }
+    // public static SessionFactory getSessionFactory() {
+    // StandardServiceRegistry registry;
+    // SessionFactory sessionFactory;
+    // registry = new StandardServiceRegistryBuilder().configure().build();
+
+    // MetadataSources sources = new MetadataSources(registry);
+
+    // sources.addAnnotatedClass(Hit.class);
+
+    // Metadata metadata = sources.getMetadataBuilder().build();
+
+    // sessionFactory = metadata.getSessionFactoryBuilder().build();
+    // return sessionFactory;
+    // }
+
+    public static EntityManagerFactory getSessionFactory() {
+        try {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PostgresPU");
+            return entityManagerFactory;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
         }
-        return factory;
     }
+
 }

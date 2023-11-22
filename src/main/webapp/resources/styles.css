@@ -49,6 +49,23 @@ body {
     width: 85%;
 }
 
+.command-links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.command-links a {
+    background-color: black;
+    color: white;
+    margin-right: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .main-container {
     display: flex;
     width: 100%;
@@ -128,6 +145,12 @@ input[type=text]::placeholder {
     flex-direction: column;
 }
 
+.btns-c input{
+    color: #fff;
+    background-color: #000;
+    margin-bottom: 15px;
+}
+
 .main-btns div div {
     text-align: center;
     margin-bottom: 15%;
@@ -142,6 +165,56 @@ input[type=text]::placeholder {
 
 .submit-button {
     opacity: 0.5;
+}
+
+.head{
+    display: flex;
+    width: 100%;
+    flex-direction: row !important;
+    align-items: center;
+}
+
+.head div{
+    width: calc(100%/6);
+    text-align: center ;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #000;
+}
+
+.row:last-child{
+    border-bottom: none;
+}
+
+tbody {
+    min-width: 100%;
+}
+#text_block{
+    display: flex;
+    flex-direction: row;
+}
+tr {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100%/6);
+}
+
+td span {
+    width: 100%;
+    text-align: center;
 }
 
 .result-table {
@@ -161,30 +234,6 @@ input[type=text]::placeholder {
         max-height: 200px;
         margin-top: 3%;
     }
-}
-
-
-.row {
-    height: 50px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    border-bottom: 1px #000 solid;
-}
-
-.row:last-child {
-    border: 0;
-}
-
-.row div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: 1px #000 solid;
-    text-align: center;
-}
-
-.row div:last-child {
-    border: 0;
 }
 
 
@@ -213,6 +262,11 @@ input[type=text]::placeholder {
     padding: 5px;
 }
 
-.status-text {
-    margin: 0;
+.info-link{
+    background-color: transparent;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    text-decoration: none;
+    
 }

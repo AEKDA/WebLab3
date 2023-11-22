@@ -1,3 +1,4 @@
 target/
 .vscode/
 hibernate.cfg.xml
+src/main/resources

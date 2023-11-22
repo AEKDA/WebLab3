@@ -4,31 +4,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <h:outputStylesheet name="styles.css" />
     <title>Лабораторная работа №3 по веб-программированию</title>
     <h:outputStylesheet library="css" name="style.css" />
-    <h:outputScript library="js" name="time.js" target="body" />
 </h:head>
 <h:body>
-    <div id="header">
-        <h1>
-            <span>Abulfatov</span>
-            Ruslan
-        </h1>
-        <h2>P32312, var: 66647</h2>
+    <div class="header">
+        <div class="header-container">
+            <h:form>
+                <h:commandButton styleClass="info-link" value="Main page" action="main" />
+            </h:form>
+            <div>
+                <div>
+                    Селянта Олег P3214
+                </div>
+                <div>
+                    Кешишян Давид P3214
+                </div>
+                <div>
+                    Вариант 2472
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="form_block" id="time_wrapper">
         <div id="text_block">
-            <p>Время в данный момент...</p>
+            <p>Время в данный момент c клиента:  </p>
             <p id="interactive_time"></p>
         </div>
     </div>
 
-    <div class="main">
-        <h:form>
-            <h:commandButton styleClass="buttonStart" value="Start" action="main" />
-        </h:form>
-    </div>
 </h:body>
+<h:outputScript name="time.js" />
 
 </html>
