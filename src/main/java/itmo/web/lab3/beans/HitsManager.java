@@ -16,7 +16,7 @@ public class HitsManager {
     private Hit canvasHit;
 
     public HitsManager() {
-        service = new HitService();
+        service = new HitService(true);
         hit = new Hit();
         canvasHit = new Hit();
     }

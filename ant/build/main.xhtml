@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olevegic lab</title>
+    <h:outputStylesheet name="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet"/> -->
+    <link rel="icon" type="image/x-icon" href="favicon.gif" />
+</h:head>
+
+<body>
+    <h:form id="mainForm">
+        <div class="header">
+            <div class="header-container">
+
+                <h:commandButton styleClass="info-link" value="Info page" action="info" />
+
+
+                <div>
+                    <div>
+                        Кешишян Давид
+                    </div>
+                    <div>
+                        Мухамеджанов Артур
+                    </div>
+                    <div>
+                        Вариант 923
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="flex-container">
+                <div class="container">
+                    <div class="main-container">
+                        <canvas id="canvas"></canvas>
+
+                        <div class="choice">
+                            <div class="uni-choice">
+                                <h3>Choose X:</h3>
+                                <div class="command-links">
+                                    <h:commandLink action="#{hitsManager.hit.setX(-4)}" value="-4" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(-3)}" value="-3" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(-2)}" value="-2" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(-1)}" value="-1" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(0)}" value="0" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(1)}" value="1" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(2)}" value="2" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(3)}" value="3" />
+                                    <h:commandLink action="#{hitsManager.hit.setX(4)}" value="4" />
+                                    <div>
+                                        Текущее значение
+                                    </div>
+                                    <h:commandLink value="${hitsManager.hit.x}" />
+                                </div>
+                            </div>
+                            <div class="uni-choice">
+                                <h3>Choose Y:</h3>
+                                <h:inputText id="y-input" value="${hitsManager.hit.y}" maxlength="15" required="true"
+                                    aria-placeholder="-5 to 5">
+                                    <f:validateDoubleRange minimum="-5" maximum="5" />
+                                </h:inputText>
+                            </div>
+                            <div class="uni-choice">
+                                <h3>Choose R:</h3>
+                                <div class="command-links">
+                                    <h:commandLink action="#{hitsManager.hit.setR(1)}" value="1" />
+                                    <h:commandLink action="#{hitsManager.hit.setR(1.5)}" value="1.5" />
+                                    <h:commandLink action="#{hitsManager.hit.setR(2)}" value="2" />
+                                    <h:commandLink action="#{hitsManager.hit.setR(2.5)}" value="2.5" />
+                                    <h:commandLink action="#{hitsManager.hit.setR(3)}" value="3" />
+                                    <div>
+                                        Текущее значение
+                                    </div>
+                                    <h:commandLink id="server-r" value="${hitsManager.hit.r}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-btns">
+                        <div class="btns-c">
+
+                            <h:commandButton id="submit-button" onclick="isFormValid();" value="submit"
+                                action="#{hitsManager.checkHit()}" />
+                            <h:commandButton id="clearButton" value="clear" action="#{hitsManager.clear()}" />
+
+
+                        </div>
+                    </div>
+
+                    <div class="result-table">
+                        <div class="row head">
+                            <div class="x">x</div>
+                            <div class="y">y</div>
+                            <div class="r">r</div>
+                            <div class="ct">current time</div>
+                            <div class="et">execute time</div>
+                            <div class="result">result</div>
+                        </div>
+                        <h:dataTable id="maintable" value="#{hitsManager.getHits()}" var="hit" styleClass="row">
+                            <h:column>
+
+                                <h:outputText styleClass="x" value="#{hit.x}" />
+                            </h:column>
+                            <h:column>
+
+                                <h:outputText styleClass="y" value="#{hit.y}" />
+                            </h:column>
+                            <h:column>
+
+                                <h:outputText styleClass="r" value="#{hit.r}" />
+                            </h:column>
+                            <h:column>
+
+                                <h:outputText styleClass="ct" value="#{hit.dateString}" />
+                            </h:column>
+                            <h:column>
+
+                                <h:outputText styleClass="et" value="#{hit.executionTime}" />
+                            </h:column>
+                            <h:column>
+
+                                <h:outputText styleClass="result" value="#{hit.hit}" />
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="custom-alert"></div>
+    </h:form>
+    <h:form class="hidden-input" style="display: none">
+        <h:inputText styleClass="canvasX" value="#{hitsManager.canvasHit.x}">
+            <f:ajax event="change" execute="@all" render="@all" />
+        </h:inputText>
+        <h:inputText styleClass="canvasY" value="#{hitsManager.canvasHit.y}">
+            <f:ajax event="change" execute="@all" render="@all" />
+        </h:inputText>
+        <h:inputText styleClass="canvasR" value="#{hitsManager.canvasHit.r}">
+            <f:ajax event="change" execute="@all" render="@all" />
+        </h:inputText>
+        <h:commandButton styleClass="hidden-submit-button" type="submit" value="Check!"
+            action="#{hitsManager.checkCanvasHit}">
+            <f:ajax render="@all" onevent="redrawListener" />
+        </h:commandButton>
+    </h:form>
+</body>
+<h:outputScript name="script.js" />
+
+</html>

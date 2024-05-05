@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="itmo.web.lab3.beans.Hit" table="hits">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="x" column="x" type="double"/>
+        <property name="y" column="y" type="double"/>
+        <property name="r" column="r" type="double"/>
+        <property name="hit" column="hit" type="boolean"/>
+        <property name="date" column="date" type="long"/>
+        <property name="executionTime" column="execution_time" type="long"/>
+    </class>
+</hibernate-mapping>

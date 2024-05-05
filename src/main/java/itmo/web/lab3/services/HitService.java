@@ -9,10 +9,13 @@ import itmo.web.lab3.util.HitDAOImpl;
 
 
 public class HitService {
-    private HitDAO dao = new HitDAOImpl();
+    private HitDAO dao;
 
-    public HitService() {
-    }
+    public HitService(boolean dao) {
+        if (dao) {
+            this.dao = new HitDAOImpl();
+        }
+    } 
 
     public List<Hit> getHitsData() {
         return dao.getAll();
