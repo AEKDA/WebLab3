@@ -1,4 +1,4 @@
-package itmo.web.lab3.util;
+package itmo.web.lab3.infra;
 
 import java.util.List;
 

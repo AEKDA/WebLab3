@@ -3,8 +3,8 @@ package itmo.web.lab3.services;
 import java.util.List;
 
 import itmo.web.lab3.beans.Hit;
-import itmo.web.lab3.util.HitDAO;
-import itmo.web.lab3.util.HitDAOImpl;
+import itmo.web.lab3.infra.HitDAO;
+import itmo.web.lab3.infra.HitDAOImpl;
 
 
 
